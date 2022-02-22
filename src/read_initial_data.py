@@ -49,7 +49,7 @@ def extract_rc(date):
 
 
 def extract_rs(date):
-    import zstd
+    import zstandard as zstd
     path_bz2 = '%s/RS_%s.zst' % (fld_bz2, date)
     roots = dict()
     subs = set()
