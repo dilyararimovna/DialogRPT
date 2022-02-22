@@ -13,12 +13,10 @@ wget https://files.pushshift.io/reddit/submissions/RS_2011-01.zst -P data/bz2
 # Step 2. Read the `.bz2` files and group items from the same subreddit 
 
 python src/data.py bz2 2011
-python src/data.py bz2 2012
 
 # Step 3. extract basic attributes and dialog trees.
 
 python src/data.py basic 2011
-python src/data.py basic 2012
 
 # Step 4. Build training and testing data for different feedback signals. 
 
