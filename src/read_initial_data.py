@@ -4,6 +4,13 @@ import numpy as np
 from shared import _cat_
 
 
+FLD = 'data'
+fld_bz2 = FLD + '/bz2/'
+fld_jsonl = FLD + '/jsonl/'
+fld_subs = FLD + '/subs/'
+fld_out = FLD + '/out/'
+
+
 def extract_rc(date):
     path_bz2 = '%s/RC_%s.bz2' % (fld_bz2, date)
     nodes = dict()
@@ -36,6 +43,7 @@ def extract_rc(date):
         try:
             node = json.loads(line)
             print(json.dumps(node, indent=4))
+            break
         except Exception:
             continue
 
@@ -81,8 +89,22 @@ def extract_rs(date):
                     try:
                         root = json.loads(line)
                         print(json.dumps(root, indent=4))
+                        break
                     except Exception:
                         continue
+
+
+def get_dates(year_from, year_to=None):
+    if year_to is None:
+        year_to = year_from
+    dates = []
+    for year in range(year_from, year_to + 1):
+        for _mo in range(1, 12 + 1):
+            mo = str(_mo)
+            if len(mo) == 1:
+                mo = '0' + mo
+            dates.append(str(year) + '-' + mo)
+    return dates
 
 
 for date in get_dates(2011):
