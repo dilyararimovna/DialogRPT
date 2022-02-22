@@ -43,10 +43,11 @@ def extract_rc(date):
         try:
             node = json.loads(line)
             print(json.dumps(node, indent=4))
-            break
+            print("---------------------------------------------------")
+            return
         except Exception:
             continue
-
+    return
 
 def extract_rs(date):
     import zstandard as zstd
@@ -89,10 +90,10 @@ def extract_rs(date):
                     try:
                         root = json.loads(line)
                         print(json.dumps(root, indent=4))
-                        break
+                        return
                     except Exception:
                         continue
-
+    return
 
 def get_dates(year_from, year_to=None):
     if year_to is None:
