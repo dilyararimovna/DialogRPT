@@ -796,6 +796,7 @@ def build_basic(year):
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     subs = get_subs()
     for sub in subs:
+        print(f"Sub: {sub}")
         extract_time(sub, year)
         extract_txt(sub, year, tokenizer)
         extract_trees(sub, year)
