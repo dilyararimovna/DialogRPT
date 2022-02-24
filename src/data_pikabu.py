@@ -23,7 +23,7 @@ def get_dates(year_from, year_to=None):
         year_to = year_from
     dates = []
     for year in range(year_from, year_to + 1):
-        for _mo in range(1, 12 + 1):
+        for _mo in range(1, 2):
             mo = str(_mo)
             if len(mo) == 1:
                 mo = '0' + mo
