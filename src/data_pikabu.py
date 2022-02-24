@@ -773,8 +773,9 @@ def shuffle(feedback, part, n_temp=10):
         with open(path_out, 'a', encoding='utf-8') as f:
             f.write('\n'.join([lines[j].strip('\n') for j in jj]) + '\n')
 
+
 def get_subs():
-    return ['4chan']
+    return ['pikabu']
     print('collectiing subs...')
     subs = sorted(os.listdir(fld_subs))
     print('collected %i subs'%len(subs))
