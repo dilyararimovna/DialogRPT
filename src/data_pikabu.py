@@ -388,7 +388,6 @@ def calc_feedback(sub, year, overwrite=False):
                 children[parent] = []
             children[parent].append(child)
         if root not in children:
-            print(f"root {root} not in children {children}. Skipping `calc_feedback`")
             continue
 
         # BFS to get all paths from root to leaf
@@ -401,7 +400,6 @@ def calc_feedback(sub, year, overwrite=False):
                 head = path[-1]
                 if head not in children:    # then head is a leaf
                     paths.append(path)
-                    print(f"head {head} not in children {children}. Skipping `calc_feedback`")
                     continue
                 for child in children[head]:
                     q.append(path + [child])
@@ -426,17 +424,14 @@ def calc_feedback(sub, year, overwrite=False):
 
         sorted_nodes = sorted([(len(prev[node].split()), prev[node], node) for node in prev])
         if not sorted_nodes:
-            print(f"not sorted_nodes {sorted_nodes}. Skipping `calc_feedback`")
             continue
 
         n_tree += 1
         lines = []
         for _, _, node in sorted_nodes:
             if node == root:
-                print(f"node {node} equal to root {root}. Skipping `calc_feedback`")
                 continue
             if node not in updown:
-                print(f"node {node} not in updown {updown}. Skipping `calc_feedback`")
                 continue
             n_node += 1
             lines.append('%s\t%i\t%i\t%i\t%i'%(
