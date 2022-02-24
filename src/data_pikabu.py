@@ -272,6 +272,7 @@ def extract_trees(sub, year):
     os.makedirs(fld, exist_ok=True)
     path_out = '%s/%i_trees.pkl'%(fld, year)
     if os.path.exists(path_out):
+        print(f"{path_out} exists. Skipping `extract_trees`")
         return
 
     trees = dict()
@@ -279,7 +280,7 @@ def extract_trees(sub, year):
     for date in get_dates(year):
         path = '%s/%s/%s_edges.tsv'%(fld_jsonl, sub, date)
         if not os.path.exists(path):
-            #print('no such file: '+path)
+            print('extract_trees -- no such file: '+path)
             continue
         for line in open(path, encoding='utf-8'):
             n += 1
@@ -289,6 +290,7 @@ def extract_trees(sub, year):
             trees[link][(parent, child)] = date
     
     if not trees:
+        print(f"no trees. Return from extract_trees")
         return
 
     print('[%s %i] %i trees %.1f nodes/tree'%(sub, year, len(trees), n/len(trees)))
@@ -302,6 +304,7 @@ def extract_time(sub, year, overwrite=False):
     path_out = '%s/%i_time.tsv'%(fld, year)
     path_done = path_out + '.done'
     if not overwrite and os.path.exists(path_done):
+        print(f"{path_out} exists. Skipping `extract_time`")
         return
     dates = get_dates(year)
     suffix = 'nodes'
@@ -340,12 +343,12 @@ def extract_time(sub, year, overwrite=False):
     print(s)
 
 
-
 def calc_feedback(sub, year, overwrite=False):
     fld = '%s/%s'%(fld_subs, sub)
     path_out = '%s/%i_feedback.tsv'%(fld, year)
     path_done = path_out + '.done'
     if not overwrite and os.path.exists(path_done):
+        print(f"{path_out} exists. Skipping `calc_feedback`")
         return
 
     path_pkl = '%s/%i_trees.pkl'%(fld, year)
