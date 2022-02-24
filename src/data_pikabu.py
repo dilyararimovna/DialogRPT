@@ -57,7 +57,7 @@ def extract_rc(date):
             with open(fld + '/%s_edges.tsv'%date, 'a', encoding="utf-8") as f:
                 f.write('\n'.join(edges[sub]) + '\n')
 
-    fpath = "./rc_pikabu"
+    fpath = "./data/rc_pikabu"
     for fname in os.listdir(fpath):
         with open(f"{fpath}/{fname}", "r") as ff:
             ffdata = json.load(ff)
@@ -166,67 +166,6 @@ def extract_rs(date):
         date, m/1e6, n/1e6, len(subs)))
     with open(fld_jsonl + '/readme_roots.txt', 'a', encoding='utf-8') as f:
         f.write('[%s] saved %i/%i\n'%(date, m, n))
-
-
-def extract_rs_bz2(date):
-    path_bz2 = '%s/RS_%s.bz2' % (fld_bz2, date)
-    roots = dict()
-    subs = set()
-    n = 0
-    m = 0
-    kk = ['selftext', 'id', 'title', 'subreddit']
-
-    def save(roots):
-        for sub in roots:
-            fld = fld_jsonl + '/' + sub
-            try:
-                os.makedirs(fld, exist_ok=True)
-            except NotADirectoryError as e:
-                print(e)
-                continue
-            if sub not in subs:
-                open(fld + '/%s_roots.jsonl' % date, 'w', encoding="utf-8")
-                subs.add(sub)
-            with open(fld + '/%s_roots.jsonl' % date, 'a', encoding="utf-8") as f:
-                f.write('\n'.join(roots[sub]) + '\n')
-
-    for line in bz2.open(path_bz2, 'rt', encoding="utf-8"):
-        n += 1
-        line = line.strip('\n')
-        try:
-            root = json.loads(line)
-        except Exception:
-            continue
-
-        ok = True
-        for k in kk:
-            if k not in root:
-                ok = False
-                break
-        if not ok:
-            break
-        if not valid_sub(root['subreddit']):
-            continue
-
-        # some bz2, e.g. 2012-09, doesn't have the `name` entry
-        if 'name' not in root:
-            root['name'] = 't3_' + root['id']
-
-        if root['subreddit'] not in roots:
-            roots[root['subreddit']] = []
-        roots[root['subreddit']].append(line)
-
-        m += 1
-        if m % 1e4 == 0:
-            save(roots)
-            print('[RS_%s] saved %.2f/%.2f M, %i subreddits' % (date, m / 1e6, n / 1e6, len(subs)))
-            roots = dict()
-
-    save(roots)
-    print('[RS_%s] FINAL %.2f/%.2f M, %i subreddits ================' % (
-        date, m / 1e6, n / 1e6, len(subs)))
-    with open(fld_jsonl + '/readme_roots.txt', 'a', encoding='utf-8') as f:
-        f.write('[%s] saved %i/%i\n' % (date, m, n))
 
 
 def extract_txt(sub, year, tokenizer, overwrite=False, max_subword=3):
