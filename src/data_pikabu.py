@@ -793,8 +793,8 @@ def build_json(year):
 
 
 def build_basic(year):
-    from transformers import GPT2Tokenizer
-    tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+    from transformers import AutoTokenizer
+    tokenizer = AutoTokenizer.from_pretrained("Grossmend/rudialogpt3_medium_based_on_gpt2")
     subs = get_subs()
     for sub in subs:
         print(f"Sub: {sub}")
