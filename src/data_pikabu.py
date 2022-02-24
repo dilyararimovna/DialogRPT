@@ -57,7 +57,7 @@ def extract_rc(date):
             with open(fld + '/%s_edges.tsv'%date, 'a', encoding="utf-8") as f:
                 f.write('\n'.join(edges[sub]) + '\n')
 
-    fpath = "/home/dilyara.baymurzina/DreamRussianBaseline/pikabu_data/rc_pikabu"
+    fpath = "./rc_pikabu"
     for fname in os.listdir(fpath):
         with open(f"{fpath}/{fname}", "r") as ff:
             ffdata = json.load(ff)
@@ -119,7 +119,7 @@ def extract_rs(date):
             with open(fld + '/%s_roots.jsonl'%date, 'a', encoding="utf-8") as f:
                 f.write('\n'.join(roots[sub]) + '\n')
 
-    fpath = "/home/dilyara.baymurzina/DreamRussianBaseline/pikabu_data/rs_pikabu"
+    fpath = "./data/rs_pikabu"
     for fname in os.listdir(fpath):
         with open(f"{fpath}/{fname}", "r") as ff:
             ffdata = json.load(ff)
