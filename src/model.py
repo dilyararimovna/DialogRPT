@@ -5,6 +5,7 @@ import torch, os, pdb
 import numpy as np
 from transformers19 import GPT2Tokenizer, GPT2Model, GPT2Config
 from shared import EOS_token
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 class OptionInfer:
@@ -12,10 +13,14 @@ class OptionInfer:
         self.cuda = cuda
 
 
+tokenizer = AutoTokenizer.from_pretrained("Grossmend/rudialogpt3_medium_based_on_gpt2")
+
+
+
 class ScorerBase(torch.nn.Module):
     def __init__(self, opt):
         super().__init__()
-        self.ix_EOS = 50256
+        self.ix_EOS = tokenizer.eos_token_id
         self.ix_OMT = 986
         self.opt = opt
         self.tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
@@ -71,15 +76,13 @@ class ScorerBase(torch.nn.Module):
         return torch.exp(logits_pos) / (torch.exp(logits_pos) + torch.exp(logits_neg))
 
 
-
 class Scorer(ScorerBase):
     def __init__(self, opt):
         super().__init__(opt)
         n_embd = 1024
-        config = GPT2Config(n_embd=n_embd, n_layer=24, n_head=16)
-        self.transformer = GPT2Model(config)
+        self.transformer = AutoModelForCausalLM.from_pretrained("Grossmend/rudialogpt3_medium_based_on_gpt2")
+
         self.score = torch.nn.Linear(n_embd, 1, bias=False)
-        
 
     def core(self, ids, l_ids, return_logits=False):
         n = ids.shape[0]
@@ -97,11 +100,13 @@ class Scorer(ScorerBase):
     
     def load(self, path):
         from shared import download_model
+
         download_model(path)
         print('loading from '+path)
         weights = torch.load(path, map_location=torch.device('cpu'))
         if path.endswith('.pkl'):
             # DialoGPT checkpoint
+
             weights['score.weight'] = weights['lm_head.decoder.weight'][self.ix_EOS: self.ix_EOS+1, :]
             del weights['lm_head.decoder.weight']
         self.load_state_dict(weights)

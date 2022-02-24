@@ -4,6 +4,11 @@
 import torch, os, pdb
 import numpy as np
 
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+
+tokenizer = AutoTokenizer.from_pretrained("Grossmend/rudialogpt3_medium_based_on_gpt2")
+
 
 class Feeder:
     # load train/vali/test data
@@ -15,7 +20,7 @@ class Feeder:
             self.files_mismatch = dict()
         for sub in ['train', 'vali', 'test']:
             self.reset(sub)
-        self.ix_EOS = 50256
+        self.ix_EOS = tokenizer.eos_token_id
         self.ix_OMT = 986
 
 
