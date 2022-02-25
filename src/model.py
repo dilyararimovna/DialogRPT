@@ -99,16 +99,14 @@ class Scorer(ScorerBase):
 
     
     def load(self, path):
-        from shared import download_model
 
-        download_model(path)
         print('loading from '+path)
         weights = torch.load(path, map_location=torch.device('cpu'))
         if path.endswith('.pkl'):
-            # DialoGPT checkpoint
+            # russian DialoGPT checkpoint
             pass
-            # already initialized with weights
-        self.load_state_dict(weights)
+        else:
+            self.load_state_dict(weights)
         if self.opt.cuda:
             self.cuda()
 
