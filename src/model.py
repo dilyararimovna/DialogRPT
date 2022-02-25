@@ -20,8 +20,8 @@ tokenizer = AutoTokenizer.from_pretrained("Grossmend/rudialogpt3_medium_based_on
 class ScorerBase(torch.nn.Module):
     def __init__(self, opt):
         super().__init__()
-        self.ix_EOS = tokenizer.eos_token_id
-        self.ix_OMT = 986
+        self.ix_EOS = 50257
+        self.ix_OMT = 655
         self.opt = opt
         self.tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
 

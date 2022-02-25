@@ -20,8 +20,8 @@ class Feeder:
             self.files_mismatch = dict()
         for sub in ['train', 'vali', 'test']:
             self.reset(sub)
-        self.ix_EOS = tokenizer.eos_token_id
-        self.ix_OMT = 986
+        self.ix_EOS = 50257
+        self.ix_OMT = 655
 
 
     def reset(self, sub):

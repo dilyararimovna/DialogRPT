@@ -18,7 +18,7 @@ class GPT2Generator:
             weights["lm_head.weight"] = weights["lm_head.decoder.weight"]
             weights.pop("lm_head.decoder.weight",None)
         self.model.load_state_dict(weights)
-        self.ix_EOS = 50256
+        self.ix_EOS = 50257
         self.model.eval()
         self.cuda = cuda
         if self.cuda:
