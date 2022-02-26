@@ -555,7 +555,7 @@ def create_pairs(year, sub, feedback, overwrite=False):
 def add_seq(sub, year, feedback, overwrite=False):
     fname = '%i_%s'%(year, feedback)
     fld = '%s/%s'%(fld_subs, sub)
-    turn_sep = ' 50256 '
+    turn_sep = ' 50257 '
     path_out = fld + '/%s_ids.tsv'%fname
     path_done = path_out + '.done'
 
