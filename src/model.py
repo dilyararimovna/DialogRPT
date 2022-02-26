@@ -23,7 +23,7 @@ class ScorerBase(torch.nn.Module):
         self.ix_EOS = 50257
         self.ix_OMT = 655
         self.opt = opt
-        self.tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+        self.tokenizer = tokenizer
 
 
     def core(self, ids, l_ids, return_logits=False):

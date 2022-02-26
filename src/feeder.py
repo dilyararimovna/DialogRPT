@@ -62,7 +62,7 @@ class Feeder:
                 if line.startswith('#'):
                     continue
                 # old data is title + ' . ' + selftext, ' .' is 764 and often used as ' .jpg' thus misleading
-                line = line.replace(' 764\t', '\t').replace(' 764 50256 ', ' 50256 ')   
+                line = line.replace(' 18\t', '\t').replace(' 18 50257 ', ' 50257 ')   
                 total += 1
                 ss = line.strip('\n').split('\t')
                 cxt = ints(ss[0])
