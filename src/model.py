@@ -1,9 +1,7 @@
 # author: Xiang Gao at Microsoft Research AI NLP Group
 
 
-import torch, os, pdb
-import numpy as np
-from transformers19 import GPT2Tokenizer, GPT2Model, GPT2Config
+import torch
 from shared import EOS_token
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
