@@ -79,6 +79,7 @@ class Scorer(ScorerBase):
         super().__init__(opt)
         n_embd = 1024
         self.transformer = AutoModelForCausalLM.from_pretrained("Grossmend/rudialogpt3_medium_based_on_gpt2")
+        self.transformer.resize_token_embeddings(len(self.tokenizer))
 
         self.score = torch.nn.Linear(n_embd, 1, bias=False)
 
