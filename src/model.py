@@ -88,8 +88,8 @@ class Scorer(ScorerBase):
         attention_mask = torch.ones_like(ids)
         for i in range(n):
             attention_mask[i, l_ids[i]:] *= 0
-        hidden_states, _ = self.transformer(ids, attention_mask=attention_mask)
-        logits = self.score(hidden_states).squeeze(-1)
+        transformer_output = self.transformer(ids, attention_mask=attention_mask, output_hidden_states=True)
+        logits = self.score(transformer_output.hidden_states[0]).squeeze(-1)
         logits = torch.stack([logits[i, l_ids[i] - 1] for i in range(n)])
         if return_logits:
             return logits
